@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b7f8e27e9f20dd44b2919d1e6b087e0, type: 3}
+  m_Name: ResourcesLibrary
+  m_EditorClassIdentifier: 
+  collections:
+  - TypeName: UIContainer
+    Prefab: {fileID: 4710537724701703875, guid: cbfe8efb642f5a1419f8d23357a0d2ca, type: 3}
+  - TypeName: VerticalContainer
+    Prefab: {fileID: -1977385874231402653, guid: 77582741b5873704f9c0af849d0f3090, type: 3}
+  - TypeName: HorizontalContainer
+    Prefab: {fileID: -2831625981543819630, guid: b5bfa365c10b60b419b188ea7b9ad1df, type: 3}
+  - TypeName: Label
+    Prefab: {fileID: 7892062120729817197, guid: e6f5dd9bb03865b4ca3edb31b220946f, type: 3}
+  - TypeName: BackgroundImage
+    Prefab: {fileID: 97672688940554160, guid: 542067afa172ff74c95190eaa00f08ce, type: 3}
+  - TypeName: SimpleButton
+    Prefab: {fileID: 8053085628916468491, guid: 691920e188cebc64e8ee95d4ede453d2, type: 3}
+  - TypeName: GridContainer
+    Prefab: {fileID: 3978793417477374679, guid: e0e66f2cbfdae92488a5adf56e94f0fc, type: 3}
+  - TypeName: Mask
+    Prefab: {fileID: 2331374329037016155, guid: 1b5996d13edf151478ac9c12e4504ea1, type: 3}
+  - TypeName: ScrollableContainer
+    Prefab: {fileID: 4903841149965630558, guid: 52dc20d5bd710bf41b0ffb7b87c9c277, type: 3}
+  sprites:
+  - TypeName: icn_settings_512
+    Sprite: {fileID: 21300000, guid: 1fc478b80576cc44ab96e12131e60305, type: 3}
+  - TypeName: background_01
+    Sprite: {fileID: 21300000, guid: 88b992869807ea7448108993d17c8bf8, type: 3}
+  - TypeName: background_02
+    Sprite: {fileID: 21300000, guid: bd068f822ec64e74a9117eb098e46e97, type: 3}
+  - TypeName: mask_rounded
+    Sprite: {fileID: 21300000, guid: aa8331e51bea7c842a58c0de6e22ff44, type: 3}
+  - TypeName: mask_circle
+    Sprite: {fileID: -2413806693520163455, guid: 198741d330fbf3247b9d5c8e8117aae3, type: 3}
