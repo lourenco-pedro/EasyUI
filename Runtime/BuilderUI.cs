@@ -11,6 +11,7 @@ namespace EasyUI.Runtime
     public static class BuilderUI
     {
         static Canvas defaultCanvas = null;
+        static UIContainer screenViewer = null;
 
         public class BuildSettings 
         {
@@ -88,7 +89,7 @@ namespace EasyUI.Runtime
             onElementCreated?.Invoke(instance);
         }
 
-        public static void AddUIElements<UIElementType, ElementData>(List<ElementData> datas, UIContainer parent = null, Dictionary<string, object> args = null, Action<UIElementType> onElementCreated = null)
+        public static void AddUIElements<UIElementType, ElementData>(List<ElementData> datas, UIContainer parent, Dictionary<string, object> args = null, Action<UIElementType> onElementCreated = null)
             where UIElementType : UIElement<ElementData>
         {
             foreach (ElementData data in datas) 
@@ -122,9 +123,47 @@ namespace EasyUI.Runtime
             });
         }
 
+        public static Canvas GetCanvas() 
+        {
+            CheckCanvas();
+            return defaultCanvas;
+        }
+
         public static void SetCanvas(Canvas canvas) 
         {
             defaultCanvas = canvas;
+        }
+
+        public static void SetupScreenMargins(float padding) 
+        {
+            if (null != screenViewer) 
+            {
+                GameObject.Destroy(screenViewer.gameObject);
+            }
+
+            CheckCanvas();
+
+            GameObject screenViewerGO = new GameObject("ScrenViewer");
+            screenViewerGO.transform.SetParent(defaultCanvas.transform);
+            screenViewerGO.AddComponent<RectTransform>();
+
+            screenViewerGO.transform.localScale = Vector3.one;
+            
+            screenViewer = screenViewerGO.gameObject.AddComponent<UIContainer>();
+            screenViewer.SetupElement(args: new Dictionary<string, object>
+            {
+                { "anchorsMin", new Vector2(padding, padding) },
+                { "anchorsMax", new Vector2(1f - padding, 1f - padding) },
+                { "left", 0f },
+                { "right", 0f },
+                { "top", 0f },
+                { "bottom", 0f },
+            });
+        }
+
+        public static UIContainer GetScreenMargins() 
+        {
+            return screenViewer;
         }
 
         static void CheckCanvas() 

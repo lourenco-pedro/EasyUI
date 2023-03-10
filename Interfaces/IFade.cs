@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
 namespace EasyUI.Interfaces
 {
     public interface IFade
     {
-        void FadeIn();
-        void FadeOut();
+        void FadeIn(bool waitBeforeFade = true, Action onFadeIn = null);
+        void FadeOut(bool waitBeforeFade = true, Action onFadeOut = null);
     }
 }
