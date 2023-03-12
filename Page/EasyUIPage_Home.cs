@@ -17,14 +17,14 @@ namespace EasyUI.Page
             ColorUtility.TryParseHtmlString("#f54242", out Color lightRed_f54242);
             ColorUtility.TryParseHtmlString("#64b6ac", out Color lightBlue_64b6ac);
 
-            BuilderUI.AddUIElement<BackgroundImage, Sprite>(null, BuilderUI.GetScreenMargins(), args: new Dictionary<string, object> 
+            BuilderUI.AddUIElement<BackgroundImage, Sprite>(null, BuilderUI.GetScreenViewer(), args: new Dictionary<string, object> 
             {
                 { "size", "fit" },
                 { "offsetMin", new Vector2(-10, -10) },
                 { "offsetMax", new Vector2(10, 10) },
             }, onElementCreated: background => elements.Add(background.Id));
 
-            BuilderUI.AddContainer<ScrollableContainer>(BuilderUI.GetScreenMargins(), args: new Dictionary<string, object>
+            BuilderUI.AddContainer<ScrollableContainer>(BuilderUI.GetScreenViewer(), args: new Dictionary<string, object>
             {
                 { "childForceExpandHeight", false },
                 { "childControlWidth", true },

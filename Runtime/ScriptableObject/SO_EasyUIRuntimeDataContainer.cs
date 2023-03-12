@@ -18,7 +18,7 @@ namespace EasyUI.Runtime
         public static void RegisterUI(UIElement uiToRegister) 
         {
             instance.registeredUIs.Add(uiToRegister);
-            if (uiToRegister.transform.parent == BuilderUI.GetScreenMargins().transform) 
+            if (uiToRegister.transform.parent == BuilderUI.GetScreenViewer().transform) 
                 instance.canvasRoot.Add(uiToRegister.Id);
         }
         

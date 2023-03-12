@@ -11,7 +11,7 @@ namespace EasyUI.Page
         {
             List<string> elements = new List<string>();
 
-            BuilderUI.AddContainer<VerticalContainer>(BuilderUI.GetScreenMargins(), args: new Dictionary<string, object> 
+            BuilderUI.AddContainer<VerticalContainer>(BuilderUI.GetScreenViewer(), args: new Dictionary<string, object> 
             {
                 { "size", "fit" },
                 { "offsetMin", UnityEngine.Vector2.zero },

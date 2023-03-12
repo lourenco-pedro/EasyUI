@@ -22,26 +22,10 @@ namespace EasyUI.Runtime
             where UIContainerType : UIContainer 
         {
             CheckCanvas();
-            AddContainer(defaultCanvas, args, onElementCreated);
+            AddContainer(screenViewer, args, onElementCreated);
         }
 
         public static void AddContainer<UIContainerType>(UIContainer parent, Dictionary<string, object> args = null, Action<UIContainerType> onElementCreated = null)
-            where UIContainerType : UIContainer
-        {
-            UIContainerType prefab = SO_ResourcesLibrary.GetEasyUI<UIContainerType>();
-
-            if (null == prefab)
-            {
-                return;
-            }
-
-            UIContainerType instance = GameObject.Instantiate(prefab, parent.transform);
-            instance.SetupElement(args);
-
-            onElementCreated?.Invoke(instance);
-        }
-
-        public static void AddContainer<UIContainerType>(Canvas parent, Dictionary<string, object> args = null, Action<UIContainerType> onElementCreated = null)
             where UIContainerType : UIContainer
         {
             UIContainerType prefab = SO_ResourcesLibrary.GetEasyUI<UIContainerType>();
@@ -134,7 +118,7 @@ namespace EasyUI.Runtime
             defaultCanvas = canvas;
         }
 
-        public static void SetupScreenMargins(float padding) 
+        public static void SetupScreenViewer(float padding) 
         {
             if (null != screenViewer) 
             {
@@ -161,9 +145,18 @@ namespace EasyUI.Runtime
             });
         }
 
-        public static UIContainer GetScreenMargins() 
+        public static UIContainer GetScreenViewer() 
         {
+            CheckScreenViewer();
             return screenViewer;
+        }
+
+        static void CheckScreenViewer() 
+        {
+            if (screenViewer == null) 
+            {
+                SetupScreenViewer(padding: 0);
+            }
         }
 
         static void CheckCanvas() 
