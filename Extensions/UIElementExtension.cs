@@ -12,7 +12,7 @@ namespace EasyUI
             return SO_EasyUIRuntimeDataContainer.GetUIElementWithId<UIElementType>(id);
         }
 
-        public static UIElement[] ToUIElement(this string[] id)
+        public static UIElement[] ToUIElements(this string[] id)
         {
             UIElement[] foundElements = new UIElement[id.Length];
 

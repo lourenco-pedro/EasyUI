@@ -16,9 +16,22 @@ namespace EasyUI.Library
         [SerializeField] Image background;
         [SerializeField] bool useContentSizeFitter;
 
+        List<string> childs;
+
         public virtual void SetupElement(Dictionary<string, object> args = null) 
         {
+            childs = new List<string>();
             ApplyArgs(args);
+        }
+
+        public string[] GetChildren() 
+        {
+            return childs.ToArray();
+        }
+
+        public void AddChild(string id) 
+        {
+            childs.Add(id);
         }
 
         protected override void ApplyArgs(Dictionary<string, object> args = null)

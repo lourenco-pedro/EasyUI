@@ -7,6 +7,11 @@ namespace EasyUI.Page
 {
     public class EasyUIPage_Search : EasyUIPage
     {
+
+        public EasyUIPage_Search(string name) : base(name) 
+        {
+        }
+
         public override List<string> OnDrawPage()
         {
             List<string> elements = new List<string>();
@@ -34,7 +39,7 @@ namespace EasyUI.Page
                     { "font", "SEGOEUIL SDF" }
                 });
 
-                BuilderUI.AddUIElement<SimpleButton, System.Action>(() => { EasyUIPage.Add(new EasyUIPage_Home()); }, container, args: new Dictionary<string, object> 
+                BuilderUI.AddUIElement<SimpleButton, System.Action>(() => { EasyUIPage.Add(new EasyUIPage_Home("Courses")); }, container, args: new Dictionary<string, object> 
                 {
                     { "label", "Home" },
                     { "height", 300f }

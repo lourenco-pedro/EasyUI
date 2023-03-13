@@ -36,6 +36,7 @@ namespace EasyUI.Runtime
             }
 
             UIContainerType instance = GameObject.Instantiate(prefab, parent.transform);
+            parent.AddChild(instance.Id);
             instance.SetupElement(args);
 
             onElementCreated?.Invoke(instance);
@@ -61,7 +62,8 @@ namespace EasyUI.Runtime
 
             CheckCanvas();
 
-            UIElementType instance = GameObject.Instantiate(prefab, parent != null ? parent.transform : defaultCanvas.transform);
+            UIElementType instance = GameObject.Instantiate(prefab, parent != null ? parent.transform : screenViewer.transform);
+            parent.AddChild(instance.Id);
 
             instance.SetupElement(data, args);
 

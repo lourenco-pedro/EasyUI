@@ -14,7 +14,7 @@ namespace EasyUI.Page
         
         protected List<string> Elements;
 
-        public EasyUIPage(string name = "") 
+        public EasyUIPage(string name) 
         {
             Name = name;
             Elements = OnDrawPage();
@@ -25,9 +25,9 @@ namespace EasyUI.Page
         {
 
             if (onClose != null)
-                onClose += (roots) => { stackedPages.Remove(this); };
+                onClose += (roots) => { stackedPages.Pop(); };
             else
-                onClose = (roots) => { stackedPages.Remove(this); };
+                onClose = (roots) => { stackedPages.Pop(); };
 
             UIElement[] roots = GetPageRoot();
 
@@ -47,23 +47,28 @@ namespace EasyUI.Page
             string[] canvasRoot = SO_EasyUIRuntimeDataContainer.GetCanvasRootElements();
             string[] rootIds = Elements.Where(elementId => canvasRoot.Contains(elementId)).ToArray();
 
-            return rootIds.ToUIElement();
+            return rootIds.ToUIElements();
         }
 
 
         #region - System - 
 
-        public static EasyUIPage currentPage => stackedPages.Count > 0? stackedPages[stackedPages.Count - 1] : null;
-        static List<EasyUIPage> stackedPages = new List<EasyUIPage>();
+        public static EasyUIPage currentPage => stackedPages.Count > 0? stackedPages.Peek() : null;
+        static Stack<EasyUIPage> stackedPages = new Stack<EasyUIPage>();
 
         public static void Add(EasyUIPage page) 
         {
-            stackedPages.Add(page);
+            stackedPages.Push(page);
         }
 
         public static void Pop(Action<UIElement[]> onClose = null) 
         {
-            stackedPages[stackedPages.Count - 1].Close(onClose);
+            stackedPages.Pop();
+        }
+
+        public static EasyUIPage[] GetActivePages() 
+        {
+            return stackedPages.ToArray();
         }
 
         #endregion
