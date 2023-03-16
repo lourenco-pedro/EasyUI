@@ -18,11 +18,24 @@ namespace EasyUI.Editor
 
         Vector2 scrollview_activeUIPages;
         Dictionary<object, bool> foldableElements;
+        
+        Dictionary<object, bool> elementsSelection;
+        object lastSelectedItem;
+
+        Texture2D texture2D_selection;
+        
         int indentLevel = 0;
 
         private void OnEnable()
         {
             foldableElements = new Dictionary<object, bool>();
+            elementsSelection = new Dictionary<object, bool>();
+
+            ColorUtility.TryParseHtmlString("#4B8BF5", out Color color_normal);
+
+            texture2D_selection = new Texture2D(1, 1);
+            texture2D_selection.SetPixel(0, 0, color_normal);
+            texture2D_selection.Apply();
         }
 
         public override void OnInspectorGUI()
@@ -30,7 +43,7 @@ namespace EasyUI.Editor
 
             Repaint();
 
-            RemoveInvalidFoldableElements();
+            RemoveInvalidDictionaryElements();
 
             if (!Application.isPlaying)
             {
@@ -64,9 +77,16 @@ namespace EasyUI.Editor
                 foldableElements.Add(item, false);
         }
 
-        void RemoveInvalidFoldableElements() 
+        void TryAddElementSelection(object item) 
+        {
+            if (!elementsSelection.TryGetValue(item, out bool selected))
+                elementsSelection.Add(item, false);
+        }
+
+        void RemoveInvalidDictionaryElements() 
         {
             foldableElements = foldableElements.Where(f => f.Key != null).ToDictionary(x => x.Key, x => x.Value);
+            elementsSelection = elementsSelection.Where(f => f.Key != null).ToDictionary(x => x.Key, x => x.Value);
         }
 
         void DrawCollapsableItems() 
@@ -78,6 +98,7 @@ namespace EasyUI.Editor
                 foreach (EasyUIPage page in pages)
                 {
                     TryAddFoldableElement(page);
+                    TryAddElementSelection(page);
 
                     DrawCollapsableItem(page, page.Name);
                 }
@@ -91,6 +112,7 @@ namespace EasyUI.Editor
             foreach (UIElement element in elements) 
             {
                 TryAddFoldableElement(element);
+                TryAddElementSelection(element);
                 DrawCollapsableItem(element, element.name);
             }
             indentLevel--;
@@ -110,7 +132,21 @@ namespace EasyUI.Editor
                         foldableElements[foldableElementReference] = !foldableElements[foldableElementReference];
                     }
 
-                    GUILayout.Label(name);
+                    GUIStyle skin_selectedLabel = new GUIStyle(GUI.skin.label);
+                    skin_selectedLabel.normal.background = texture2D_selection;
+                    GUIStyle skin = elementsSelection[foldableElementReference] ? skin_selectedLabel : GUI.skin.label;
+
+                    if (GUILayout.Button(name, skin)) 
+                    {
+                        if(lastSelectedItem != null)
+                            elementsSelection[lastSelectedItem] = false;
+                        
+                        lastSelectedItem = foldableElementReference;
+                        elementsSelection[lastSelectedItem] = true;
+
+                        if(foldableElementReference.GetType().IsSubclassOf(typeof(UIElement)))
+                            EditorGUIUtility.PingObject(lastSelectedItem as UIElement);
+                    }
                 }
 
                 GUILayout.EndHorizontal();
@@ -135,7 +171,21 @@ namespace EasyUI.Editor
             {
                 GUILayout.BeginHorizontal();
                 GUILayout.Space(indentLevel * 20);
-                GUILayout.Label(new GUIContent { image = EditorGUIUtility.IconContent("d_PreMatCube").image, text = name });
+
+                GUIStyle skin_selectedLabel = new GUIStyle(GUI.skin.label);
+                skin_selectedLabel.normal.background = texture2D_selection;
+                GUIStyle skin = elementsSelection[foldableElementReference] ? skin_selectedLabel : GUI.skin.label;
+
+                if (GUILayout.Button(new GUIContent { image = EditorGUIUtility.IconContent("d_PreMatCube").image, text = name }, skin))
+                {
+                    if(lastSelectedItem != null)
+                        elementsSelection[lastSelectedItem] = false;
+                    
+                    lastSelectedItem = foldableElementReference;
+                    elementsSelection[lastSelectedItem] = true;
+                    EditorGUIUtility.PingObject(lastSelectedItem as UIElement);
+                }
+
                 GUILayout.EndHorizontal();
             }
         }
