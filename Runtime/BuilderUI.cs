@@ -36,6 +36,7 @@ namespace EasyUI.Runtime
             }
 
             UIContainerType instance = GameObject.Instantiate(prefab, parent.transform);
+            parent.AddChild(instance.Id);
             instance.SetupElement(args);
 
             onElementCreated?.Invoke(instance);
@@ -61,7 +62,8 @@ namespace EasyUI.Runtime
 
             CheckCanvas();
 
-            UIElementType instance = GameObject.Instantiate(prefab, parent != null ? parent.transform : defaultCanvas.transform);
+            UIElementType instance = GameObject.Instantiate(prefab, parent != null ? parent.transform : screenViewer.transform);
+            parent.AddChild(instance.Id);
 
             instance.SetupElement(data, args);
 
@@ -120,11 +122,6 @@ namespace EasyUI.Runtime
 
         public static void SetupScreenViewer(float padding) 
         {
-            if (null != screenViewer) 
-            {
-                GameObject.Destroy(screenViewer.gameObject);
-            }
-
             CheckCanvas();
 
             GameObject screenViewerGO = new GameObject("ScrenViewer");
@@ -151,11 +148,11 @@ namespace EasyUI.Runtime
             return screenViewer;
         }
 
-        static void CheckScreenViewer() 
+        public static void CheckScreenViewer() 
         {
             if (screenViewer == null) 
             {
-                SetupScreenViewer(padding: 0);
+                SetupScreenViewer(padding: 0.05f);
             }
         }
 

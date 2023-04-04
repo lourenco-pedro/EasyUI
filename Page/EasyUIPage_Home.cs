@@ -9,6 +9,11 @@ namespace EasyUI.Page
 {
     public class EasyUIPage_Home : EasyUIPage
     {
+
+        public EasyUIPage_Home(string name) : base(name) 
+        {
+        }
+
         public override List<string> OnDrawPage()
         {
             List<string> elements = new List<string>();
@@ -289,7 +294,7 @@ namespace EasyUI.Page
                     { "constraintCount", 3 }
                 });
 
-                BuilderUI.AddUIElement<SimpleButton, System.Action>(() => { EasyUIPage.Pop(); }, parent, new Dictionary<string, object> 
+                BuilderUI.AddUIElement<SimpleButton, System.Action>(() => { Close(); }, parent, new Dictionary<string, object> 
                 {
                     { "label", "close" }
                 });
