@@ -122,11 +122,6 @@ namespace EasyUI.Runtime
 
         public static void SetupScreenViewer(float padding) 
         {
-            if (null != screenViewer) 
-            {
-                GameObject.Destroy(screenViewer.gameObject);
-            }
-
             CheckCanvas();
 
             GameObject screenViewerGO = new GameObject("ScrenViewer");
@@ -153,11 +148,11 @@ namespace EasyUI.Runtime
             return screenViewer;
         }
 
-        static void CheckScreenViewer() 
+        public static void CheckScreenViewer() 
         {
             if (screenViewer == null) 
             {
-                SetupScreenViewer(padding: 0);
+                SetupScreenViewer(padding: 0.05f);
             }
         }
 
