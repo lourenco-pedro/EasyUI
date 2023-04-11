@@ -10,7 +10,7 @@ EasyUI já apresenta uma navegação entre paineis implementada. Não é complex
 
 ## Creating pages ##
 
-O sistema aprensenta as ``EasyUIPage``, que são containers onde irão ser programados todos os comandos necessários para a construção da página desejada. Toda a construção da págin é realizada dentro de uma função chamada ``OnDrawPage``.
+O sistema aprensenta as ``EasyUIPage``, que são containers onde irão ser programados todos os comandos necessários para a construção da página desejada. Cada página do seu projeto será uma ``EasyUIPage`` diferente. Toda a construção da págin é realizada dentro de uma função chamada ``OnDrawPage``.
 
 Tendo a sua página implementada e caso queira abrir-la, será necessário adicionar uma instância desta página dentro da pilha de páginas, através do comando `` EasyUIPage.Add(your_page_here); ``
 <br>
@@ -61,7 +61,7 @@ Ao chamar esse comando, o sistema adiciona essa nova instância na pilha de pág
 
 ## Building your page: UIElement
 
-``UIElements`` são os componentes que irão compor a sua tela, e terão a função de fornecer informações e suportar interaçãos do usuário. Existem diversos ``UIElements`` dentro  desta package que ja suprem as necessidades básicas de uma tela. Estes elementos tem em sua superclasse o campo ``ElementData`` que serve para conter o valor que este elemento irá representar. Então digamos que queira criar um texto na tela com o valor ``Hello World``, o seu ``ElementData`` será o responsável por conter este valor. Todos os elementos de interface terao o seu ``ElementData`` definido, seja um botão ou um texto. É possível criar seus próprios ``UIElement`` conforme seu projeto for necessitando. Please refer to [Making your own uielements](#making-your-own-uielements)
+``UIElements`` são os componentes que irão compor a sua tela, e terão a função de fornecer informações e suportar interaçãos do usuário. Existem diversos ``UIElements`` dentro  desta package que ja suprem as necessidades básicas de uma tela. Estes elementos tem em sua superclasse o campo ``ElementData`` que serve para conter o valor que este elemento irá representar. Então digamos que queira criar um texto na tela com o valor ``Hello World``, o seu ``ElementData`` será o responsável por conter este valor. Todos os elementos de interface terao o seu ``ElementData`` definido, seja um botão ou um texto. Sua definição ocorre no momento em que o elemento é instanciado na tela, através da função ``SetupElement(ElementData data, Dictionary<string, object> args = null)``. É possível criar seus próprios ``UIElement`` conforme seu projeto for necessitando. Please refer to [Making your own uielements](#making-your-own-uielements)
 
 Para construir a sua página contendo seus elementos de interface todos os comandos terão que ser feitos dentro da função ``OnDrawPage()``. Ao abrir uma nova página, o sistema executa essa função uma vez que a página está pronta para ser desenhada. Existem alguns elementos básicos que podem ser adicionados quando estiver montando a sua página, mas saiba que todos eles serão construídos através da funçao ``AddUIElement()``, da classe ``BuilderUI``. Essa função é uma função genérica, e que recebe alguns parâmetros. Vejamos sua representação abaixo:
 
@@ -110,4 +110,108 @@ De modo geral, uma página irá conter uma estrutura hierarquizada de ``UIContai
 
 ## Making your own uielements
 
+É possível criar ``UIElements`` personalizados, com objetivo de suprir as necessidades do seu projeto. Vamos analisar a implemetação de um elemento já presente nesta package, o elemento ``Label``:
+
+```CS
+namespace EasyUI.Library
+{
+    public class Label : UIElement<string>
+    {
+        [SerializeField]
+        protected TextMeshProUGUI label;
+
+        public override void SetupElement(string data, Dictionary<string, object> args = null)
+        {
+            base.SetupElement(data, args);
+
+            label.text = data;
+        }
+
+        protected override void ApplyArgs(Dictionary<string, object> args = null)
+        {
+            if (args.TryGetValue("fontSize", out object fontSize)) 
+            {
+                label.fontSize = (float)fontSize;
+            }
+
+            if (args.TryGetValue("font", out object font)) 
+            {
+                label.font = Resources.Load<TMP_FontAsset>($"Fonts/{(string)font}");
+            }
+
+            if (args.TryGetValue("fontStyle", out object fontStyle)) 
+            {
+                label.fontStyle = (FontStyles)fontStyle;
+            }
+
+            if (args.TryGetValue("color", out object color)) 
+            {
+                label.color = (Color)color;
+            }
+
+            if (args.TryGetValue("alignment", out object alignment)) 
+            {
+                label.alignment = (TextAlignmentOptions)alignment;
+            }
+
+            if (args.TryGetValue("lineSpacing", out object lineSpacing)) 
+            {
+                label.lineSpacing = (float)lineSpacing;
+            }
+
+            base.ApplyArgs(args);
+        }
+    }
+}
+```
+Como dito na seção [sobre os UIElements](#building-your-page-uielement). Seu dado é definido no momento em que é instanciado na tela. Logo, ao chamar a função ``SetupElement``, o código define qual vai ser o seu dado e em seguida atribui este dado no elemento de texto ``label``.
+
+A função abaixo ``ApplyArgs`` estará presente em todos os ``UIElements`` presentes no projeto. Nessa função, pode ser definida algumas palavras chaves para algumas definições dos atributos do elemento. No caso de ``Label``, foram criadas atributos que ajudam a definir o estilo do texto, afetando em como ele deve ser quando for instanciado.
+
+> **_NOTE:_** Não esqueça de chamar as classes bases das funções citadas acima, caso contrário, algumas funcionalidades do sistema não vão funcionar.
+
 ## Making your own uicontainers
+
+É possível criar ``UIContainers`` personalizados com o objetivo de suprir as necessidades do seu projeto. Vamos analisar a implementação de um elemento já presente nesta páckage, o container ``ScrollableContainer``:
+
+```CS
+namespace EasyUI.Library
+{
+    [RequireComponent(typeof(ScrollRect))]
+    public class ScrollableContainer : VerticalContainer
+    {
+
+        [SerializeField] protected ScrollRect scrollRect;
+
+        public override void SetupElement(Dictionary<string, object> args = null)
+        {
+            scrollRect.viewport = transform.parent as RectTransform;
+            scrollRect.content = transform as RectTransform;
+
+            base.SetupElement(args);
+        }
+
+        protected override void ApplyArgs(Dictionary<string, object> args = null)
+        {
+            if (args.TryGetValue("movementType", out object movementType))
+                scrollRect.movementType = (ScrollRect.MovementType)movementType;
+
+            if (args.TryGetValue("inertia", out object inertia))
+                scrollRect.inertia = (bool)inertia;
+
+            if (args.TryGetValue("scrollHorizontal", out object scrollHorizontal))
+                scrollRect.horizontal = (bool)scrollHorizontal;
+
+            if(args.TryGetValue("scrollVertical", out object scrollVertical))
+                scrollRect.vertical = (bool)scrollVertical;
+
+            base.ApplyArgs(args);
+        }
+
+    }
+}
+```
+
+Este container tem como objetivo possibilitar o usuário de scrollar a página. Assim como os ``UIElement``, o container também apresenta as funções ``SetupEmelement`` e ``ApplyArgs``. No exemplo acima, o container está implementando um outro cotainer chamado ``VerticalContainer``, que tem como objetivo dispor os elementos filho verticalmente. E por sua vez, essa classe herda a classe base ``UIContainer``. No final, esta classe acima irá apresentar os elementos verticalmente e será possível scrollar a página.
+
+> **_NOTE:_** Não esqueça de chamar as classes bases das funções citadas acima, caso contrário, algumas funcionalidades do sistema não vão funcionar.
