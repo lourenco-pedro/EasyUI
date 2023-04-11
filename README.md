@@ -2,6 +2,25 @@
 
 EasyUI é uma package desenvolvida com o objetivo de acelerar o processo de desenvolvimento de telas dentro dos projetos da Unity. Seu foco é na construção das telas através de códigos, bastatante inspirado em como a interface do usuário dos aplicativos desenvolvidos em Flutter são feitos.
 
+# Summary #
+
+- [How does it works](#how-does-it-works)
+    - [Navigating between pages already made for you](#navigating-between-pages-already-made-for-you)
+    - [Creating pages](#creating-pages)
+        - [Implementing a new page](#implementing-a-new-page)
+        - [Displaying this page](#displaying-this-page)
+    - [Building your page: UIElement](#building-your-page-uielement)
+        - [Analisando seus parâmetros](#analisando-seus-parâmetros)
+    - [Building your page: UIContainer](#building-your-page-uicontainer)
+        - [Analisando seus parâmetros](#analisando-seus-parc3a2metros-1)
+    - [Building your page: ScreenViewer](#building-your-page-screenviewer)
+    - [General Layout](#general-layout)
+    - [Making your own uielements](#making-your-own-uielements)
+    - [Making your own uicontainer](#making-your-own-uielements)
+    - [The EasyUI.Library](#the-easyuilibrary)
+- [License](#license)
+
+
 # How does it works #
 
 ## Navigating between pages already made for you ##
@@ -215,3 +234,27 @@ namespace EasyUI.Library
 Este container tem como objetivo possibilitar o usuário de scrollar a página. Assim como os ``UIElement``, o container também apresenta as funções ``SetupEmelement`` e ``ApplyArgs``. No exemplo acima, o container está implementando um outro cotainer chamado ``VerticalContainer``, que tem como objetivo dispor os elementos filho verticalmente. E por sua vez, essa classe herda a classe base ``UIContainer``. No final, esta classe acima irá apresentar os elementos verticalmente e será possível scrollar a página.
 
 > **_NOTE:_** Não esqueça de chamar as classes bases das funções citadas acima, caso contrário, algumas funcionalidades do sistema não vão funcionar.
+
+## The EasyUI.Library
+
+Todos os elementos de interface já criados para esta pacakage poderão ser acessados dentro da namespace ``EasyUI.Library``. Abaixo estão alguns dos elementos já desenvolvidos até então:
+
+### UIElements
+
+- BackgroundImage
+- Label
+- SimpleButton
+- Mask
+
+### UIContainer
+
+- HorizontalOrVerticalContainer
+    - HorizontalContainer
+        - ScrollableContainer
+    - VerticalContainer
+- GridContainer
+
+
+# License 
+
+EasyUI is a free software; you can redistribute it and/or modify it under the terms of the MIT license. See LICENSE for details.
