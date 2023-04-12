@@ -12,7 +12,7 @@ EasyUI is a package developed with the objective of speeding up the process of i
     - [Building your page: UIElement](#building-your-page-uielement)
         - [Checking the parameters](#checking-the-parameters)
     - [Building your page: UIContainer](#building-your-page-uicontainer)
-        - [Analisando seus parâmetros](#analisando-seus-parc3a2metros-1)
+        - [Checking the parameters](#checking-the-parameters-1)
     - [Building your page: ScreenViewer](#building-your-page-screenviewer)
     - [General Layout](#general-layout)
     - [Making your own uielements](#making-your-own-uielements)
@@ -105,35 +105,35 @@ The function above will create an element inside the screen. Every element deriv
 
 ## Building your page: UIContainer
 
-``UIContainer`` como seu nome ja nos diz, é responsável por conter um conjunto de ``UIElements``. São blocos que irão compor a sua página, seja uma cabeçalho, footer, um menu, uma página com scrollview e entre outras várias possibilidades. ``UIContainer`` tem também como objetivo facilitar a estruturação de sua página. Please refer to Please refer to [Making your own uicontainer](#making-your-own-uicontainers).
+``UIContainer`` is responsible for containing a set of ``UIElements``. It is a block that will compose your page. It is for grouping a set of ``UIElements`` for organizational purposes. With ``UIContainer`` you can create know groups such as Headers, footers, menu,s and so on. Just like the ``UIElements``, you can also create your own ``UIContainers``, please, refer to [Making your own uicontainer](#making-your-own-uicontainers).
 
-Para adicionar um ``UIContainer`` dentro da sua página, assim como os ``UIElements``, seus comandos de criação devem ser realizados dentro da função ``OnDrawnPage()``, da classe ``BuilderUI``. O comando a ser chamado deverá ser o ``AddUIContainer``. Vejamos sua representação abaixo:
+You can add a new ``UIContainer``to your page by calling the ``AddUIContainer`` function, from the ``BuilderUI`` class. Remember that this function must be called inside the ``OnDrawPage``
 
 
 ```CS
 BuilderUI.AddContainer<UIContainerType>(UIContainer parent, Dictionary<string, object> args = null, Action<UIContainerType> onElementCreated = null);
 ```
 
-### Analisando seus parâmetros
+### Checking the parameters
 
-* ``ElementData parent``: É possível aninhar ``UIContainers``.
-* ``Dictionary<string, object> args``: Parâmetro opcional que define todos os atributos do ``UIContainer`` instanciado na tela.
-* ``Action<UIElementType> OnElementCreated``: Callback opcional que é disparada logo depois que o elemento é instanciado na tela.
+* ``ElementData parent``: It is possible to add nested ``UIContainers``.
+* ``Dictionary<string, object> args``: Optional parameter that defines every attributes of this instantiated container.
+* ``Action<UIElementType> OnElementCreated``: Optional callback fired once the container is instantiated. Often used to create other elements sequentially.
 
 ## Building your page: ScreenViewer
 
-Todos os elementos são criados dentro de um ``UIContainer`` raiz chamado de ``ScreenViewer``. Esse container é instanciado por padrão quando o sistema cria uma página. É com este elemento que pode configurar o ``padding`` do seu aplicativo. Para definir o ``padding``, é nessecário chamar a função ``SetupScreenViewer(float padding)``, passando o valor desejado no argumento.
+Every element is created inside a root ``UIContainer`` called ``ScreenViewer``. This container is instantiated by default when the System creates your first page. it is with that element that you can configure the general padding of the app. To configure the general padding of the app, you can call the ``SetupScreenViewer(float padding)`` function - also inside the ``BuilderUI`` class.
 
 ## General Layout
 
-De modo geral, uma página irá conter uma estrutura hierarquizada de ``UIContainer`` e ``UIElement``. Essa estrutura pode ser observada no asset ``RuntimeDataContainer``, como demonstra a imagem abaixo:
+In general, your page will have a hierarchy structure made of ``UIContainer`` and ``UIElement``. This structure can be observed in the ``RuntimeDataContainer`` asset, just as shown bellow:
 
 <img src="README-FILES/RuntimeDataContainer-Hierarchy.png" style="margin-top: 10px; margin-bottom: 10px">
 
 
 ## Making your own uielements
 
-É possível criar ``UIElements`` personalizados, com objetivo de suprir as necessidades do seu projeto. Vamos analisar a implemetação de um elemento já presente nesta package, o elemento ``Label``:
+It is possible to create your own ``UIElement`` as your project needs. Let's check how the ``Label`` is implemented as a model:
 
 ```CS
 namespace EasyUI.Library
@@ -187,15 +187,15 @@ namespace EasyUI.Library
     }
 }
 ```
-Como dito na seção [sobre os UIElements](#building-your-page-uielement). Seu dado é definido no momento em que é instanciado na tela. Logo, ao chamar a função ``SetupElement``, o código define qual vai ser o seu dado e em seguida atribui este dado no elemento de texto ``label``.
+As said before about UIElements, their data is defined at the moment the element is instantiated. Under the hood, the instantiation process calls the ``SetupElement`` function, giving the desired data value passed inside the argument when called the ``CreateUIElement`` before.
 
-A função abaixo ``ApplyArgs`` estará presente em todos os ``UIElements`` presentes no projeto. Nessa função, pode ser definida algumas palavras chaves para algumas definições dos atributos do elemento. No caso de ``Label``, foram criadas atributos que ajudam a definir o estilo do texto, afetando em como ele deve ser quando for instanciado.
+The ``ApplyArgs`` function will be on every ``UIElement``. The system uses this function to define every attribute of this instantiated ``UIElement`` you desire to change.
 
-> **_NOTE:_** Não esqueça de chamar as classes bases das funções citadas acima, caso contrário, algumas funcionalidades do sistema não vão funcionar.
+> **_NOTE:_** Don't forget to call the ``base.ApplyArgs()`` and ``base.SetupElement()``. Otherwise, the UIElement will not work properly.
 
 ## Making your own uicontainers
 
-É possível criar ``UIContainers`` personalizados com o objetivo de suprir as necessidades do seu projeto. Vamos analisar a implementação de um elemento já presente nesta páckage, o container ``ScrollableContainer``:
+It is possible to create your own ``UIContainer`` as your project needs. Let's check how the ``ScrollableContainer`` is implemented as a model:
 
 ```CS
 namespace EasyUI.Library
@@ -235,13 +235,15 @@ namespace EasyUI.Library
 }
 ```
 
-Este container tem como objetivo possibilitar o usuário de scrollar a página. Assim como os ``UIElement``, o container também apresenta as funções ``SetupEmelement`` e ``ApplyArgs``. No exemplo acima, o container está implementando um outro cotainer chamado ``VerticalContainer``, que tem como objetivo dispor os elementos filho verticalmente. E por sua vez, essa classe herda a classe base ``UIContainer``. No final, esta classe acima irá apresentar os elementos verticalmente e será possível scrollar a página.
+This container has the objective to let the users scroll through the page. Once the container is instantiated, the system will set it up by calling the ``SetupElement`` function. And will define their attributes by calling the ``ApplyArgs`` function.
 
-> **_NOTE:_** Não esqueça de chamar as classes bases das funções citadas acima, caso contrário, algumas funcionalidades do sistema não vão funcionar.
+Note that in this case, the scrollable is deriving from another class called ``VerticalContainer`` instead of deriving directly from ``UIContainer``. It was made like that because ``VerticalContainer`` already derives from ``UIContainer``, and so the user can also create only vertical containers that don't have any scrollable capability.
+
+> **_NOTE:_** Don't forget to call the ``base.ApplyArgs()`` and ``base.SetupElement()``. Otherwise, the UIContainer will not work properly.
 
 ## The EasyUI.Library
 
-Todos os elementos de interface já criados para esta pacakage poderão ser acessados dentro da namespace ``EasyUI.Library``. Abaixo estão alguns dos elementos já desenvolvidos até então:
+Every ``UIElement`` and ``UIContainer`` created for this package can be found in EasyUI.Library namespace. Here are all the elements already made for you:
 
 ### UIElements
 
