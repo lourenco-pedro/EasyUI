@@ -1,6 +1,6 @@
 # EasyUI #
 
-EasyUI é uma package desenvolvida com o objetivo de acelerar o processo de desenvolvimento de telas dentro dos projetos da Unity. Seu foco é na construção das telas através de códigos, bastatante inspirado em como a interface do usuário dos aplicativos desenvolvidos em Flutter são feitos.
+EasyUI is a package developed with the objective of speeding up the process of implementing in-game screens inside Unity. Its focus is on building screens entirely from code, very inspired by how the interfaces of apps in Flutter are made.
 
 # Summary #
 
@@ -10,7 +10,7 @@ EasyUI é uma package desenvolvida com o objetivo de acelerar o processo de dese
         - [Implementing a new page](#implementing-a-new-page)
         - [Displaying this page](#displaying-this-page)
     - [Building your page: UIElement](#building-your-page-uielement)
-        - [Analisando seus parâmetros](#analisando-seus-parâmetros)
+        - [Checking the parameters](#checking-the-parameters)
     - [Building your page: UIContainer](#building-your-page-uicontainer)
         - [Analisando seus parâmetros](#analisando-seus-parc3a2metros-1)
     - [Building your page: ScreenViewer](#building-your-page-screenviewer)
@@ -25,16 +25,16 @@ EasyUI é uma package desenvolvida com o objetivo de acelerar o processo de dese
 
 ## Navigating between pages already made for you ##
 
-EasyUI já apresenta uma navegação entre paineis implementada. Não é complexo e ja cobre o suficente para realizar a construção de mais de uma página dentro do projeto. Ajudando o usuário e focar somente no desenvolvimento das páginas e não em "como navegar entre elas"
+EasyUI already has a navigation system implemented. It's not a complex system but it covers enough to make apps with more than one page. Helping the user to focus only on what screens the apps must have instead of how to navigate between them.
 
 ## Creating pages ##
 
-O sistema aprensenta as ``EasyUIPage``, que são containers onde irão ser programados todos os comandos necessários para a construção da página desejada. Cada página do seu projeto será uma ``EasyUIPage`` diferente. Toda a construção da págin é realizada dentro de uma função chamada ``OnDrawPage``.
+The system has the ``EasyUIPage``, which are containers where it will be programmed every command for building up the page. Each page on your game will be a different `EasyUIPage``. Every command must be added inside the ``OnDrawPage``.
 
-Tendo a sua página implementada e caso queira abrir-la, será necessário adicionar uma instância desta página dentro da pilha de páginas, através do comando `` EasyUIPage.Add(your_page_here); ``
+If you have your page implemented and you want to open it, you'll have to add an instance of that page inside of a stack of EasyUIPages through the command `` EasyUIPage.Add(your_page_here); ``
 <br>
 <br>
-Abaixo mostra um pequeno exemplo de como implementar uma nova página para o seu projeto.
+The example below shows how to implement a new page for your project.
 <br>
 <br>
 
@@ -76,27 +76,31 @@ public class YouControllerClass : Monobehaviour
 }
 
 ```
-Ao chamar esse comando, o sistema adiciona essa nova instância na pilha de páginas. O sistema por debaixo dos panos realiza todo processo de transição da página atual para a recém adicionada na pilha. Tendo isso em vista, é possível também fazer o processo inverso, fechar uma página através da função ``Close()``. Ao chamar essa função, o sistema remove a página do topo da pilha.
+When calling this command, the system adds this new instance onto the ``EasyUIPages`` stack. The system will do all the processes of transition between pages from the actual page to the latest one added to the stack. It's also possible to do the reverse process, closing the actual page by calling the ``Close()`` function. By calling this function, the system will remove the current page from the stack.
 
 ## Building your page: UIElement
 
-``UIElements`` são os componentes que irão compor a sua tela, e terão a função de fornecer informações e suportar interaçãos do usuário. Existem diversos ``UIElements`` dentro  desta package que ja suprem as necessidades básicas de uma tela. Estes elementos tem em sua superclasse o campo ``ElementData`` que serve para conter o valor que este elemento irá representar. Então digamos que queira criar um texto na tela com o valor ``Hello World``, o seu ``ElementData`` será o responsável por conter este valor. Todos os elementos de interface terao o seu ``ElementData`` definido, seja um botão ou um texto. Sua definição ocorre no momento em que o elemento é instanciado na tela, através da função ``SetupElement(ElementData data, Dictionary<string, object> args = null)``. É possível criar seus próprios ``UIElement`` conforme seu projeto for necessitando. Please refer to [Making your own uielements](#making-your-own-uielements)
+The ``UIElements`` are the components that will compose your screen. There are a few ``UIElements`` already implemented inside this package that provides you with the basic needs of a screen. 
 
-Para construir a sua página contendo seus elementos de interface todos os comandos terão que ser feitos dentro da função ``OnDrawPage()``. Ao abrir uma nova página, o sistema executa essa função uma vez que a página está pronta para ser desenhada. Existem alguns elementos básicos que podem ser adicionados quando estiver montando a sua página, mas saiba que todos eles serão construídos através da funçao ``AddUIElement()``, da classe ``BuilderUI``. Essa função é uma função genérica, e que recebe alguns parâmetros. Vejamos sua representação abaixo:
+Those elements have a field in their superclass called ElementData, which holds the actual value which this ``UIElement`` represents. So let's say you want to add a label on your screen with the value ``Hello World`` on it. Its ``ElementData`` will be the one that will hold this value. Every element must have its ``ElementData`` defined, be it a button, a label, a mask, etc. 
+
+The ``ElementData`` is defined inside the ``SetupElement<ElementData>(ElementData data)`` function. It is possible to create your own ``UIElement``for your project's needs. Please, refer to [Making your own uielements](#making-your-own-uielements)
+
+You can use the ``AddUIElement()`` function to instantiate UIElement on your page. This function can be accessed from the ``BuilderUI``. Every command to draw any ``UIElement`` on your page must be added inside the ``OnDrawPage()`` function. When opening a page, the system executes this function once the page is ready to be drawn. By calling this function, you must add some arguments inside it, let's break through it:
 
 ```CS
 Builder.AddUIElement<UIElementType, ElementData>(ElementData data, UIContainer parent = null, Dictionary<string, object> args = null,Action<UIElementType> onElementCreated = null, BuildSettings settings = null);
 ```
 
-A função apresentada acima cria um elemento de interface na tela. Esse elemento sempre será derivado da superclasse ``UIElement<ElementType, DataType>``. Todas as classes derivadas de ``UIElement<ElementType, DataType>`` apresentam o dado que irá representar, esse dado vai ser o que será apresentado na tela ou executado quando o uisário interagir com o elemento. O tipo de elemento a ser criado e o dado a ser utilizado serão especificados na hora da chamada da função genérica. E O tipo desse dado que o elemento de interface irá suportar é definido durante a implementação de sua classe.
+The function above will create an element inside the screen. Every element derives from a superclass called ``UIElement<ElementType>`` - where the ``ElementType`` is the type of data this element will hold. The type of element and the value of its data will be specified when calling the function above.
 
-### Analisando seus parâmetros
+### Checking the parameters
 
-* ``ElementData data``: Qual será o valor do dado que o elemento vai conter.
-* ``UIContainer parent``: Parâmetro opcional que define onde que este elemento vai ser criado. [See about UIContainer](#building-your-page-uicontainer). Caso seja nulo, o elemento será instanciado dentro da [``ScreenViewer``](#building-your-page-screenviewer)  
-* ``Dictionary<string, object> args``: Parâmetro opcional que define todos os atributos do ``UIElement`` instanciado na tela.
-* ``Action<UIElementType> OnElementCreated``: Callback opcional que é disparada logo depois que o elemento é instanciado na tela.
-* ``BuildSettings settings``: Parâmetro opcional que apresenta algumas configurações de como o processo de criação dele deve acontecer.
+* ``ElementData data``: What is going to be the value of this UIElement.
+* ``UIContainer parent``: Optional parameter that defines the element's parent. [See about UIContainer](#building-your-page-uicontainer). If it is null then this element will be instantiated inside the [``ScreenViewer``](#building-your-page-screenviewer)  
+* ``Dictionary<string, object> args``: Optional parameter that defines every attributes of this instantiated element.
+* ``Action<UIElementType> OnElementCreated``: Optional callback fired once the element is instantiated. Often used to create other elements sequentially.
+* ``BuildSettings settings``: Optional parameter that holds additional config of how this instantiation process must happen.
 
 
 ## Building your page: UIContainer
