@@ -29,7 +29,7 @@ EasyUI already has a navigation system implemented. It's not a complex system bu
 
 ## Creating pages ##
 
-The system has the ``EasyUIPage``, which are containers where it will be programmed every command for building up the page. Each page on your game will be a different `EasyUIPage``. Every command must be added inside the ``OnDrawPage``.
+The system has the ``EasyUIPage``, which are containers where it will be programmed every command for building up the page. Each page on your game will be a different ``EasyUIPage``. Every command must be added inside the ``OnDrawPage``.
 
 If you have your page implemented and you want to open it, you'll have to add an instance of that page inside of a stack of EasyUIPages through the command `` EasyUIPage.Add(your_page_here); ``
 <br>
