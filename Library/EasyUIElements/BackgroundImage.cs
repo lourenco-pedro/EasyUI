@@ -2,10 +2,17 @@ using UnityEngine.UI;
 using UnityEngine;
 using System.Collections.Generic;
 
+using EasyUI.Interfaces;
+
 namespace EasyUI.Library
 {
+
     public class BackgroundImage : UIElement<Sprite>
     {
+
+        public const string ColorProperty = "color";
+        public const string SpriteProperty = "sprite";
+
         [SerializeField]
         protected Image image;
 
@@ -14,7 +21,7 @@ namespace EasyUI.Library
             base.SetupElement(data, args);
             image.sprite = data;
         }
-
+        
         protected override void ApplyArgs(Dictionary<string, object> args = null)
         {
             base.ApplyArgs(args);

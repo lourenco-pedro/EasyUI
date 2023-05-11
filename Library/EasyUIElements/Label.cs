@@ -4,12 +4,22 @@ using TMPro;
 
 using UnityEngine;
 
+using EasyUI.Interfaces;
+
 namespace EasyUI.Library
 {
+  
     public class Label : UIElement<string>
     {
         [SerializeField]
         protected TextMeshProUGUI label;
+
+        public const string FonPropertyt = "font";
+        public const string FontSizeProperty = "fontSize";
+        public const string FontStyleProperty = "fontStyle";
+        public const string ColorProperty = "color";
+        public const string AlignmentProperty = "aligment";
+        public const string LineSpacingProperty = "lineSpacing";
 
         public override void SetupElement(string data, Dictionary<string, object> args = null)
         {
