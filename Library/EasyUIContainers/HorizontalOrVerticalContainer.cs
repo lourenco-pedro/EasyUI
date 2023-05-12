@@ -7,6 +7,17 @@ namespace EasyUI.Library
 {
     public class HorizontalOrVerticalContainer : UIContainer
     {
+
+        public const string HorizontalOrVerticalPropertySpacing = "spacing";
+        public const string HorizontalOrVerticalPropertyChildAlignment = "childAlignment";
+        public const string HorizontalOrVerticalPropertyChildControlWidth = "childControlWidth";
+        public const string HorizontalOrVerticalPropertyChildControlHeigh = "childControlHeigh";
+        public const string HorizontalOrVerticalPropertyChildScaleWidth = "childScaleWidth";
+        public const string HorizontalOrVerticalPropertyChildScaleHeight = "childScaleHeight";
+        public const string HorizontalOrVerticalPropertyChildForceExpandWidth = "childForceExpandWidth";
+        public const string HorizontalOrVerticalPropertyChildForceExpandHeight = "childForceExpandHeight";
+        public const string HorizontalOrVerticalPropertyPadding = "padding";
+
         [SerializeField] protected HorizontalOrVerticalLayoutGroup horizontalOrVerticalLayoutGroup;
 
         protected override void ApplyArgs(Dictionary<string, object> args = null)

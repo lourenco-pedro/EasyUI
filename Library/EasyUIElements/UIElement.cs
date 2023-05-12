@@ -44,6 +44,26 @@ namespace EasyUI.Library
 
         protected string Tags;
 
+        public const string UIElementPropertyTag = "tag";
+        public const string UIElementPropertyPivot = "pivot";
+        public const string UIElementPropertyChildAnchor = "pivot";
+        public const string UIElementPropertyX = "childAnchor";
+        public const string UIElementPropertyY = "y";
+        public const string UIElementPropertySize = "size";
+        public const string UIElementPropertyFit = "fit";
+        public const string UIElementPropertyFitWidth = "fitWidth";
+        public const string UIElementPropertyAnchorsMin = "anchorsMin";
+        public const string UIElementPropertyAnchorsMax = "anchorsMax";
+        public const string UIElementPropertyOffsetMin = "offsetMin";
+        public const string UIElementPropertyOffsetMax = "offsetMax";
+        public const string UIElementPropertyLeft = "left";
+        public const string UIElementPropertyRight = "right";
+        public const string UIElementPropertyBottom = "bottom";
+        public const string UIElementPropertyTop = "top";
+        public const string UIElementPropertyWidth = "width";
+        public const string UIElementPropertyHeight = "height";
+        public const string UIElementPropertySizeDelta = "sizeDelta";
+
         protected virtual void ApplyArgs(Dictionary<string, object> args = null)
         {
 
