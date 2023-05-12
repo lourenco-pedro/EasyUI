@@ -91,12 +91,18 @@ namespace EasyUI.Library
                 if (size.Equals("fit") && RectTransform.parent != null)
                 {
                     RectTransform.anchorMin = Vector2.zero;
+                    RectTransform.offsetMin = Vector2.zero;
+
                     RectTransform.anchorMax = Vector2.one;
+                    RectTransform.offsetMax = Vector2.zero;
                 }
                 if(size.Equals("fitWidth") && RectTransform != null)
                 {
                     RectTransform.anchorMin = new Vector2(0, RectTransform.anchorMin.y);
                     RectTransform.anchorMax = new Vector2(1, RectTransform.anchorMax.y);
+
+                    RectTransform.offsetMin = new Vector2(0, RectTransform.offsetMin.y);
+                    RectTransform.offsetMax = new Vector2(0, RectTransform.offsetMax.y);
                 }
             }
 
