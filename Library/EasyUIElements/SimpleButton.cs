@@ -3,17 +3,32 @@ using System.Collections.Generic;
 
 using TMPro;
 
+using EasyUI.Interfaces;
+
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace EasyUI.Library
 {
+    
     [RequireComponent(typeof(Button))]
     [RequireComponent(typeof(Image))]
     public class SimpleButton : UIElement<Action>
     {
 
-        [SerializeField]
+        public const string FontSizeProperty = "fontSize";
+        public const string LabelProperty = "label";
+        public const string FontProperty = "font";
+        public const string FontStyleProperty = "fontStyle";
+        public const string ColorProperty = "color";
+        public const string AlignmentProperty = "aligment";
+        public const string LineSpacingProperty = "lineSpacing";
+        public const string BackgroundColorProperty = "backgroundColor";
+        public const string SpriteProperty = "sprite";
+        public const string PreserveAspectProperty = "preserveAspect";
+        public const string CoverImageColorProperty = "coverImageColor";
+        
+        [SerializeField]                                                    
         TextMeshProUGUI label;
         [SerializeField]
         Button button;

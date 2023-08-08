@@ -10,6 +10,9 @@ namespace EasyUI.Page
 
         public EasyUIPage_Search(string name) : base(name) 
         {
+            System.Threading.Thread t = new System.Threading.Thread(()=>
+            {
+            });
         }
 
         public override List<string> OnDrawPage()
@@ -26,12 +29,6 @@ namespace EasyUI.Page
             }, onElementCreated: container => 
             {
                 elements.Add(container.Id);
-
-                BuilderUI.AddUIElement<Label, string>("Search page", container, args: new Dictionary<string, object> 
-                {
-                    { "fontSize", 56f },
-                    { "font", "SEGOEUIL SDF" }
-                });
 
                 BuilderUI.AddUIElement<Label, string>("Lorem inpsum", container, args: new Dictionary<string, object>
                 {

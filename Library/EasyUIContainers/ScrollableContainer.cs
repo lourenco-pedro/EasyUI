@@ -9,6 +9,11 @@ namespace EasyUI.Library
     public class ScrollableContainer : VerticalContainer
     {
 
+        public const string ScrollableContainerMovementType = "movementType";
+        public const string ScrollableContainerInertia = "inertia";
+        public const string ScrollableContainerScrollHorizontal = "scrollHorizontal";
+        public const string ScrollableContainerScrollVertical = "scrollVertical";
+
         [SerializeField] protected ScrollRect scrollRect;
 
         public override void SetupElement(Dictionary<string, object> args = null)

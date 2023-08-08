@@ -9,6 +9,15 @@ namespace EasyUI.Library
     {
         [SerializeField] CustomGridLayoutGroup gridLayoutGroup;
 
+        public const string CustomGridLayoutGroupPropertyCellSize = "cellSize";
+        public const string CustomGridLayoutGroupPropertyPadding = "padding";
+        public const string CustomGridLayoutGroupPropertySpacing = "spacing";
+        public const string CustomGridLayoutGroupPropertyStartCorner = "startCorner";
+        public const string CustomGridLayoutGroupPropertyStartAxis = "startAxis";
+        public const string CustomGridLayoutGroupPropertyChildAlignment = "childAlignment";
+        public const string CustomGridLayoutGroupPropertyConstraint = "constraint";
+        public const string CustomGridLayoutGroupPropertyConstraitCount = "constraitCount";
+
         protected override void ApplyArgs(Dictionary<string, object> args = null)
         {
             if (args.TryGetValue("cellSize", out object cellSize))

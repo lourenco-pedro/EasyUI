@@ -9,6 +9,8 @@ namespace EasyUI.Library
         [SerializeField]
         protected UnityEngine.UI.Mask mask;
 
+        public const string MaskPropertyShowMaskGraphics = "showMaskGraphics";
+
         protected override void ApplyArgs(Dictionary<string, object> args = null)
         {
             if (args.TryGetValue("showMaskGraphics", out object showMaskGraphics))

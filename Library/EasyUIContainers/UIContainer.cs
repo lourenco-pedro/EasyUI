@@ -8,6 +8,12 @@ namespace EasyUI.Library
     public class UIContainer : UIElement
     {
 
+        public const string UIContainerPropertyUseContentSizeFitter = "useContentSizeFitter";
+        public const string UIContainerPropertyHorizontalFit = "horizontalFit";
+        public const string UIContainerPropertyVerticalFit = "verticalFit";
+        public const string UIContainerPropertyBackgroundColor = "backgroundColor";
+        public const string UIContainerPropertyBackgroundSprite = "backgroundSprite";
+
         public bool UseContentSizeFitter => useContentSizeFitter;
 
         public float widht => RectTransform.sizeDelta.x;

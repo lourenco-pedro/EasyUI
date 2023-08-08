@@ -44,6 +44,26 @@ namespace EasyUI.Library
 
         protected string Tags;
 
+        public const string UIElementPropertyTag = "tag";
+        public const string UIElementPropertyPivot = "pivot";
+        public const string UIElementPropertyChildAnchor = "pivot";
+        public const string UIElementPropertyX = "childAnchor";
+        public const string UIElementPropertyY = "y";
+        public const string UIElementPropertySize = "size";
+        public const string UIElementPropertyFit = "fit";
+        public const string UIElementPropertyFitWidth = "fitWidth";
+        public const string UIElementPropertyAnchorsMin = "anchorsMin";
+        public const string UIElementPropertyAnchorsMax = "anchorsMax";
+        public const string UIElementPropertyOffsetMin = "offsetMin";
+        public const string UIElementPropertyOffsetMax = "offsetMax";
+        public const string UIElementPropertyLeft = "left";
+        public const string UIElementPropertyRight = "right";
+        public const string UIElementPropertyBottom = "bottom";
+        public const string UIElementPropertyTop = "top";
+        public const string UIElementPropertyWidth = "width";
+        public const string UIElementPropertyHeight = "height";
+        public const string UIElementPropertySizeDelta = "sizeDelta";
+
         protected virtual void ApplyArgs(Dictionary<string, object> args = null)
         {
 
@@ -71,12 +91,18 @@ namespace EasyUI.Library
                 if (size.Equals("fit") && RectTransform.parent != null)
                 {
                     RectTransform.anchorMin = Vector2.zero;
+                    RectTransform.offsetMin = Vector2.zero;
+
                     RectTransform.anchorMax = Vector2.one;
+                    RectTransform.offsetMax = Vector2.zero;
                 }
                 if(size.Equals("fitWidth") && RectTransform != null)
                 {
                     RectTransform.anchorMin = new Vector2(0, RectTransform.anchorMin.y);
                     RectTransform.anchorMax = new Vector2(1, RectTransform.anchorMax.y);
+
+                    RectTransform.offsetMin = new Vector2(0, RectTransform.offsetMin.y);
+                    RectTransform.offsetMax = new Vector2(0, RectTransform.offsetMax.y);
                 }
             }
 
